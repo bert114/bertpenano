@@ -12,7 +12,9 @@ function ProjectListings() {
 
   const [loading, setLoading] = useState(false);
   const [limit, setLimit] = useState(3);
+  const [text, setText] = useState("View More");
 
+  /*
   const fetchProject = async (url) => {
     try {
       const res = await fetch(url);
@@ -27,6 +29,7 @@ function ProjectListings() {
       }, 1000);
     }
   };
+  */
 
   /*
   useEffect(() => {
@@ -56,18 +59,22 @@ function ProjectListings() {
   };
   */
 
-  const handelClick = async () => {
+  const handelClick = () => {
+    if (loading) {
+      return;
+    }
+
     setLoading(true);
 
     setTimeout(() => {
       setLoading(false);
+      setText(text === "View Less" ? "View More" : "View Less");
+      if (limit == 3) {
+        setLimit(60);
+      } else {
+        setLimit(3);
+      }
     }, 1000);
-
-    if (limit == 3) {
-      setLimit(60);
-    } else {
-      setLimit(3);
-    }
   };
 
   return (
@@ -89,7 +96,7 @@ function ProjectListings() {
           )}
 
           <button className="more" onClick={handelClick}>
-            {limit == 3 ? "View more" : "View Less"}{" "}
+            {text}
             <img src={chevron} alt="" />
           </button>
         </div>
